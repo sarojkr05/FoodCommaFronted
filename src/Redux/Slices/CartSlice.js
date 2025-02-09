@@ -40,24 +40,28 @@ export const removeProductFromCart = createAsyncThunk('/cart/removeProduct', asy
 
 export const getCartDetails = createAsyncThunk('/cart/getDetails', async () => {
     try {
-        const response = axiosInstance.get(`/carts`);
+        const response = await axiosInstance.get(`/carts`);
+        console.log(response);
         toast.promise(response, {
             loading: 'Fetching cart details',
-            error: 'Something went wrong cannot fetch cart',
             success: 'Cart fetched successfully',
+            error: 'Something went wrong cannot fetch cart'
         });
-        const apiResponse = await response;
+        const apiResponse = await response.data;
         
         return apiResponse;
     } catch(error) {
-        console.log(error.response);
-        if(error?.response?.status === 401) {
-            toast.error('Please login to view cart');
-            return {
-                isUnauthorized: true
-            }
-        }
-        toast.error('Something went wrong');
+        // console.log(error.response);
+        // if(error?.response?.status === 401) {
+        //     toast.error('Please login to view cart');
+        //     return {
+        //         isUnauthorized: true
+        //     }
+        // }
+        // toast.error('Something went wrong');
+
+        console.log(error)
+        
     }
 });
 
@@ -68,7 +72,7 @@ const cartSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getCartDetails.fulfilled, (state, action) => {
-            state.cartsData = action?.payload?.data?.data;
+            state.cartsData = action?.payload?.data;
         });
     }
 });

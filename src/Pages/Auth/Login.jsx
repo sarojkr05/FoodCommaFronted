@@ -38,9 +38,9 @@ function Login() {
 
         const apiReponse = await dispatch(login(loginData));
         console.log("Api response", apiReponse);
-        if(apiReponse.payload.data.success) {
+        if(apiReponse.payload) {
             navigate('/');
-        }
+        }        
     }
 
     return (

@@ -1,9 +1,18 @@
 import axios from "axios";
 
-const axiosInstance = axios.create(); // Create a new instance of axios
+const axiosInstance = axios.create({
+    baseURL: "http://localhost:3000", // Change if your backend URL is different
+});
 
-axiosInstance.defaults.baseURL = import.meta.env.VITE_BACKEND_URL; // Set the base URL
-
-axiosInstance.defaults.withCredentials = true; // Allow cookies to be sent with requests
+// ✅ Add interceptor to attach token to every request
+axiosInstance.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token"); // Retrieve the token from localStorage
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`; // Attach token to headers
+    }
+    return config;
+}, (error) => {
+    return Promise.reject(error);
+});
 
 export default axiosInstance;

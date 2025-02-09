@@ -12,9 +12,10 @@ import { useEffect } from "react";
 import { getAllProducts } from "../Redux/Slices/ProductSlice";
 import { Link } from "react-router-dom";
 function Home() { 
+
     const dispatch = useDispatch();
 
-    const { productsData } = useSelector((state) => state.product);
+    const productsData = useSelector((state) => state.product?.productsData || []);
 
     useEffect(() => {
         // This will be called when the component mounts

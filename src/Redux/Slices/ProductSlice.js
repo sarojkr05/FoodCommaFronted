@@ -9,6 +9,7 @@ const initialState = {
 export const getAllProducts = createAsyncThunk('/products/getAll', async () => {
     try {
         const products = axiosInstance.get('/products');
+        console.log(products);
         toast.promise(products, {
             loading: 'Loading all the products',
             error: 'Something went cannot load products',
@@ -44,7 +45,7 @@ const productSlice = createSlice({
     redicers: {},
     extraReducers: (builder) => {
         builder.addCase(getAllProducts.fulfilled, (state, action) => {
-            console.log(action.payload);
+            console.log(action?.payload);
             state.productsData = action?.payload?.data?.data;
         });
     }

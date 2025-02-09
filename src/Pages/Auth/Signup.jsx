@@ -63,7 +63,6 @@ function Signup() {
         <SignUpPresentation 
             handleFormSubmit={handleFormSubmit} 
             handleUserInput={handleUserInput} 
-            
         />
     )
 }
